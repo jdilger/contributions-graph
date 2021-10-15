@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import dateutils
+from contributions import dateutils
 
 
 def quartiles(values):

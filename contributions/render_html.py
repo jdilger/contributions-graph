@@ -12,7 +12,6 @@ This module is responsible for preparing and rendering the templates.
 
 from collections import namedtuple
 import datetime
-from types import StringTypes
 import ntpath
 
 from jinja2 import Environment, PackageLoader
@@ -29,27 +28,29 @@ def create_graph(filepaths):
     Prepare the `index.html` template.
     """
     graphs = []
-    if isinstance(filepaths, StringTypes):
+    if type(filepaths) is str:
         filepaths = [filepaths]
-
+    print(type(filepaths),';;;;;;;;;;;;')
     for path in filepaths:
         contributions = parser.parse_file(path)
+        print(contributions)
+        print(type(contributions))
 
         graph = {
             "data": gridify_contributions(contributions),
             "cell_class": _cell_class(contributions.values()),
             "longest_streak": statistics.longest_streak(
-                [key for key, val in contributions.iteritems() if val > 0]
+                [key for key, val in contributions.items() if val > 0]
             ),
             "current_streak": statistics.current_streak(
-                [key for key, val in contributions.iteritems() if val > 0]
+                [key for key, val in contributions.items() if val > 0]
             ),
-            "sum": sum(contributions.itervalues()),
+            "sum": sum(contributions.values()),
             "repo_name": ntpath.basename(path)
         }
 
         graph["last_date"] = (
-            [""] + sorted([key for key, v in contributions.iteritems() if v])
+            [""] + sorted([key for key, v in contributions.items() if v])
         )[-1]
 
         graphs.append(graph)
