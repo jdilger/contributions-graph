@@ -30,11 +30,9 @@ def create_graph(filepaths):
     graphs = []
     if type(filepaths) is str:
         filepaths = [filepaths]
-    print(type(filepaths),';;;;;;;;;;;;')
+
     for path in filepaths:
         contributions = parser.parse_file(path)
-        print(contributions)
-        print(type(contributions))
 
         graph = {
             "data": gridify_contributions(contributions),
